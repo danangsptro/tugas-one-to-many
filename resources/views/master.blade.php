@@ -16,13 +16,14 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+
 
     {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" /> --}}
 </head>
 
 <body>
     @yield('content')
-    {{-- @yield('js') --}}
 
 </body>
 
@@ -33,6 +34,15 @@
 </script>
 <script src="{{ asset('assets/js/jquery.overlayScrollbars.min.js') }}"></script>
 <script src="{{ asset('assets/js/adminlte.js') }}"></script>
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+
+<script>
+    $(document).ready( function () {
+    $('#table_id').DataTable();
+} );
+</script>
+
 {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 <script>
     $(".js-example-placeholder-multiple").select2({

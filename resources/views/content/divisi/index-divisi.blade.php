@@ -78,7 +78,7 @@
                                     </div>
                                 @endif
                                 <br><br>
-                                <table class="table">
+                                <table class="table display" id="table_id">
                                     <thead class="thead-dark">
                                         <h3 style="text-align: center">TABLE DIVISI KARYAWAN</h3>
                                         <br>

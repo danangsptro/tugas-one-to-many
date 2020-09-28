@@ -1,6 +1,6 @@
 @extends('master')
 @section('content')
-@section('title','KARYAWAN  | Dasboard')
+@section('title', 'KARYAWAN | Dasboard')
 
     <body class="hold-transition sidebar-mini layout-fixed">
         <div class="wrapper">
@@ -13,9 +13,9 @@
                         </div>
                         <div class="info">
                             <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                            v-pre>
-                            {{ Auth::user()->name }}
-                        </a>
+                                v-pre>
+                                {{ Auth::user()->name }}
+                            </a>
                         </div>
                     </div>
                     <nav class="mt-2">
@@ -58,81 +58,88 @@
             </aside>
             <div class="content-wrapper">
                 <section class="content">
-                        <div class="jumbotron jumbotron-fluid">
-                            <body>
-                                <style>
-                                    .table {
-                                        text-align: center;
-                                    }
-                            
-                                </style>
-                            </body>
-                            <div class="container-fluid mt-3">
-                                <a href="{{ route('karyawan.create') }}"><button class="btn btn-primary">Tambah Data</button></a>
-                                <a href="{{ url('admin/dasbord') }}"><button class="btn btn-primary">Back Halaman Admin</button></a>
-                            
-                                @if (session()->has('validasi'))
-                                    <div class="alert alert-success">
-                                        {{ session()->get('validasi') }}
-                                    </div>
-                                @endif
-                                @if (Session::has('sukses'))
-                                    <div class="alert alert-success">
-                                        <p>{{ Session::get('sukses') }}</p>
-                                    </div>
-                                @endif
-                                <br><br>
-                                <table class="table">
-                                    <thead class="thead-dark">
-                                        <h3 style="text-align: center">TABLE KARYAWAN</h3>
-                                        <br>
+                    <div class="jumbotron jumbotron-fluid">
+
+                        <body>
+                            <style>
+                                .table {
+                                    text-align: center;
+                                }
+
+                            </style>
+                        </body>
+                        <div class="container-fluid mt-3">
+                            <a href="{{ route('karyawan.create') }}"><button class="btn btn-primary">Tambah
+                                    Data</button></a>
+                            <a href="{{ url('admin/dasbord') }}"><button class="btn btn-primary">Back Halaman
+                                    Admin</button></a>
+
+                            @if (session()->has('validasi'))
+                                <div class="alert alert-success">
+                                    {{ session()->get('validasi') }}
+                                </div>
+                            @endif
+                            @if (Session::has('sukses'))
+                                <div class="alert alert-success">
+                                    <p>{{ Session::get('sukses') }}</p>
+                                </div>
+                            @endif
+                            <br><br>
+                            <table class="table display" id="table_id">
+                                <thead class="thead-dark">
+                                    <h3 style="text-align: center">TABLE KARYAWAN</h3>
+                                    <br>
+                                    <tr>
+                                        <th scope="col">NO</th>
+                                        <th scope="col">NAMA KARYAWAN</th>
+                                        <th scope="col">ALAMAT KARYAWAN</th>
+                                        <th scope="col">NOMOR KARYAWAN</th>
+                                        <th scope="col">DIVISI KARYAWAN</th>
+                                        <th scope="col">JABATAN KARYAWAN</th>
+                                        <th scope="col">STATUS KARYAWAN</th>
+                                        {{-- <th scope="col">HOBI</th>
+                                        --}}
+                                        <th scope="col">ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($data as $d)
                                         <tr>
-                                            <th scope="col">NO</th>
-                                            <th scope="col">NAMA KARYAWAN</th>
-                                            <th scope="col">ALAMAT KARYAWAN</th>
-                                            <th scope="col">NOMOR KARYAWAN</th>
-                                            <th scope="col">DIVISI KARYAWAN</th>
-                                            <th scope="col">JABATAN KARYAWAN</th>
-                                            <th scope="col">STATUS KARYAWAN</th>
-                                            {{-- <th scope="col">HOBI</th> --}}
-                                            <th scope="col">ACTION</th>
+                                            <td>{{ $d->id }}</td>
+                                            <td>{{ $d->nama_karyawan }}</td>
+                                            <td>{{ $d->alamat_karyawan }}</td>
+                                            <td>{{ $d->nomor_telepon }}</td>
+                                            <td>{{ $d->divisi->nama_divisi }}</td>
+                                            <td>{{ $d->jabatan->jabatan_karyawan }}</td>
+                                            <td>{{ $d->status->status_karyawan }}</td>
+                                            {{-- <td>
+                                                @foreach ($d->hobi as $item)
+                                                    {{ $item->nama_hobi }}
+                                                @endforeach
+                                            </td> --}}
+                                            <td class="class-inline">
+                                                <a href="{{ route('karyawan.edit', $d->id) }}"><button
+                                                        class="btn btn-warning">EDIT</button></a>
+                                                <form action="{{ route('karyawan.destroy', $d->id) }}" method="POST"
+                                                    class="d-inline">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button class="btn btn-danger"
+                                                        onclick="return confirm('ANDA YAKIN INGIN HAPUS ?')">
+                                                        HAPUS
+                                                    </button>
+                                                </form>
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($data as $d)
-                                            <tr>
-                                                <td>{{ $d->id }}</td>
-                                                <td>{{ $d->nama_karyawan }}</td>
-                                                <td>{{ $d->alamat_karyawan }}</td>
-                                                <td>{{ $d->nomor_telepon }}</td>
-                                                <td>{{ $d->divisi->nama_divisi }}</td>
-                                                <td>{{ $d->jabatan->jabatan_karyawan }}</td>
-                                                <td>{{ $d->status->status_karyawan }}</td>
-                                                {{-- <td>
-                                                    @foreach ($d->hobi as $item)
-                                                        {{$item->nama_hobi}}
-                                                    @endforeach
-                                                </td> --}}
-                                                <td class="class-inline">
-                                                    <a href="{{ route('karyawan.edit', $d->id) }}"><button class="btn btn-warning">EDIT</button></a>
-                                                    <form action="{{ route('karyawan.destroy', $d->id) }}" method="POST">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button class="btn btn-danger" onclick="return confirm('ANDA YAKIN INGIN HAPUS ?')">
-                                                            HAPUS
-                                                        </button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                            
-                            </div>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
+
                     </div>
-                </section>
             </div>
+        </div>
+        </section>
+        </div>
         </div>
     @endsection
